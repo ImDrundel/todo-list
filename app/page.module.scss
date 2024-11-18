@@ -1,0 +1,7 @@
+@use "colors-variables" as *;
+
+.container {
+  background-color: $color-main;
+  color: $color-text;
+  height: 100vh;
+}
