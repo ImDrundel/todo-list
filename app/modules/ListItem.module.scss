@@ -1,0 +1,70 @@
+@use "colors-variables" as *;
+
+.itemBox {
+  display: grid;
+  align-items: center;
+  width: 700px;
+  min-height: 75px;
+  border: 1px $color-text solid;
+  border-radius: 5px;
+  background-color: $color-sub-1;
+  box-shadow: 1px 3px 10px $color-sub-1;
+  grid-template-columns: 1fr 10fr 1fr 1fr;
+}
+.checkbox {
+  align-self: center;
+  justify-self: center;
+  width: 50px;
+  height: 50px;
+  border: 1px $color-text solid;
+  border-radius: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.completed {
+  position: relative;
+  // transform: 0.5;
+  &::after,
+  &::before {
+    position: absolute;
+    content: "";
+    background-color: $color-sub-2;
+    width: 3px;
+    border-radius: 5px;
+    left: -5%;
+    top: -5%;
+  }
+  &::after {
+    height: 30px;
+    rotate: 45deg;
+    transform: translate(30px, -15px);
+  }
+  &::before {
+    height: 20px;
+    rotate: -45deg;
+    transform: translate(-3px, 25px);
+  }
+}
+
+.textbox {
+  align-self: center;
+  justify-self: center;
+}
+.deleteButton {
+  width: 2.5rem;
+  height: 2.5rem;
+  align-self: center;
+  justify-self: center;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.moveButtonsBox {
+  align-self: center;
+}
+.moveUpButton,
+.moveDownButton {
+  border: 1px $color-text solid;
+}

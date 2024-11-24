@@ -1,7 +1,12 @@
 @use "colors-variables" as *;
 
 .container {
-  background-color: $color-main;
-  color: $color-text;
-  height: 100vh;
+  display: grid;
+  // align-content: center;
+  // justify-content: center;
+  justify-items: center;
+}
+
+.itemsContainer {
+  padding-top: 30px;
 }
