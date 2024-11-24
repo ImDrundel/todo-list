@@ -1,7 +1,6 @@
 "use client"
 import { useState } from "react"
 import styles from "./page.module.scss"
-// import Form from "next/form"
 import ListItem from "./modules/ListItem"
 import EnterBox from "./modules/EnterBox"
 interface Tasks {

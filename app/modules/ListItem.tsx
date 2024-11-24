@@ -1,6 +1,7 @@
 import Image from "next/image"
 import styles from "./ListItem.module.scss"
 import DeleteButton from "@/public/delete-button.svg"
+import moveButton from "@/public/move-button.svg"
 
 interface ListItemProps {
   task: {
@@ -34,25 +35,28 @@ const ListItem: React.FC<ListItemProps> = ({
       <div className={styles.deleteButton}>
         <Image
           src={DeleteButton}
-          width={50}
-          height={50}
+          width={40}
+          height={40}
           alt="Delete button"
           onClick={() => deleteTask(index)}
         ></Image>
       </div>
       <div className={styles.moveButtonsBox}>
-        <button
-          className={styles.moveUpButton}
+        <Image
+          src={moveButton}
+          alt="move-button"
+          width={25}
+          height={25}
           onClick={() => moveTaksUp(index)}
-        >
-          Up
-        </button>
-        <button
+        />
+        <Image
           className={styles.moveDownButton}
+          src={moveButton}
+          alt="move-button"
+          width={25}
+          height={25}
           onClick={() => moveTaskDown(index)}
-        >
-          Down
-        </button>
+        />
       </div>
     </div>
   )
