@@ -1,7 +1,35 @@
 @use "colors-variables" as *;
-
+@mixin custom-color($custom-color) {
+  &::after {
+    position: absolute;
+    content: "";
+    background-color: $custom-color;
+    height: 100%;
+    width: 25px;
+    border-radius: 5px 0 0 5px;
+  }
+  &::before {
+    position: absolute;
+    content: "";
+    background-color: $custom-color;
+    height: 100%;
+    width: 5px;
+    border-radius: 0 5px 5px 0;
+    transform: translateX(695px);
+  }
+  border-color: $custom-color;
+}
+@mixin color-change-button($color) {
+  margin-left: 1px;
+  background-color: $color;
+  border-radius: 4px;
+  border: 1px $color-text solid;
+  height: 10px;
+  width: 15px;
+  cursor: pointer;
+}
 .itemBox {
-  margin-top: 10px;
+  margin-top: 20px;
   padding: 5px 0;
   display: grid;
   align-items: center;
@@ -12,9 +40,24 @@
   border-radius: 5px;
   background-color: $color-sub-1;
   box-shadow: 1px 3px 10px $color-sub-1;
-  grid-template-columns: 70px 550px 40px 40px;
+  grid-template-columns: 70px 540px 40px 50px;
+  position: relative;
 }
+.customColor {
+  &.red {
+    @include custom-color(rgb(255, 70, 70));
+  }
+  &.blue {
+    @include custom-color(rgb(70, 70, 255));
+  }
+  &.green {
+    @include custom-color(rgb(70, 255, 70));
+  }
+}
+
 .checkbox {
+  z-index: 1;
+  background-color: $color-sub-1;
   align-self: center;
   justify-self: center;
   width: 50px;
@@ -55,6 +98,28 @@
   align-self: center;
   justify-self: center;
 }
+
+.colorChangeBox {
+  display: flex;
+  position: absolute;
+  // height: 15px;
+  width: 70px;
+  top: 0;
+  transform: translate(540px, -50%);
+  .colorChangeToStandart {
+    @include color-change-button($color-sub-1);
+  }
+  .colorChangeToRed {
+    @include color-change-button(rgb(255, 50, 50));
+  }
+  .colorChangeToBlue {
+    @include color-change-button(rgb(50, 50, 255));
+  }
+  .colorChangeToGreen {
+    @include color-change-button(rgb(50, 255, 50));
+  }
+}
+
 .deleteButton {
   align-self: center;
   justify-self: center;

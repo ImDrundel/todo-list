@@ -6,24 +6,33 @@ import EnterBox from "./modules/EnterBox"
 interface Tasks {
   text: string
   checkbox: boolean
+  customColor: string
 }
 
 export default function Home() {
   const [tasks, setTasks] = useState<Tasks[]>([
-    { text: "First", checkbox: false },
-    { text: "Second", checkbox: false },
-    { text: "Third", checkbox: false },
-    { text: "Last", checkbox: false },
+    { text: "First", checkbox: false, customColor: "none" },
+    { text: "Second", checkbox: false, customColor: "blue" },
+    { text: "Third", checkbox: false, customColor: "none" },
+    { text: "Last", checkbox: false, customColor: "green" },
   ])
-  const [newTask, setNewTask] = useState<Tasks>({ text: "", checkbox: false })
+  const [newTask, setNewTask] = useState<Tasks>({
+    text: "",
+    checkbox: false,
+    customColor: "none",
+  })
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setNewTask({ text: event.target.value, checkbox: false })
+    setNewTask({
+      text: event.target.value,
+      checkbox: false,
+      customColor: "none",
+    })
   }
   function addNewTask(): void {
     if (newTask.text.trim() !== "") {
       setTasks((t) => [...t, newTask])
-      setNewTask({ text: "", checkbox: false })
+      setNewTask({ text: "", checkbox: false, customColor: "none" })
     }
   }
   function deleteTask(index: number): void {
@@ -59,7 +68,11 @@ export default function Home() {
     }
     setTasks(temporaryTasks)
   }
-
+  function colorChange(index: number, color: string): void {
+    const temporaryTasks = [...tasks]
+    temporaryTasks[index].customColor = color
+    setTasks(temporaryTasks)
+  }
   return (
     <div className={styles.container}>
       <EnterBox
@@ -74,6 +87,7 @@ export default function Home() {
             task={task}
             index={index}
             compliteTask={compliteTask}
+            colorChange={colorChange}
             deleteTask={deleteTask}
             moveTaksUp={moveTaksUp}
             moveTaskDown={moveTaskDown}
