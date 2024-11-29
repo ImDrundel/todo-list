@@ -15,7 +15,7 @@
     height: 100%;
     width: 5px;
     border-radius: 0 5px 5px 0;
-    transform: translateX(695px);
+    transform: translateX(795px);
   }
   border-color: $custom-color;
 }
@@ -33,14 +33,14 @@
   padding: 5px 0;
   display: grid;
   align-items: center;
-  width: 700px;
+  width: 800px;
   min-height: 75px;
   text-wrap: wrap;
   border: 1px $color-text solid;
   border-radius: 5px;
   background-color: $color-sub-1;
-  box-shadow: 1px 3px 10px $color-sub-1;
-  grid-template-columns: 70px 540px 40px 50px;
+  box-shadow: 3px 5px 10px $color-sub-1;
+  grid-template-columns: 70px 595px 45px 40px 50px;
   position: relative;
 }
 .customColor {
@@ -77,7 +77,7 @@
     position: absolute;
     content: "";
     background-color: $color-sub-2;
-    width: 3px;
+    width: 5px;
     border-radius: 5px;
     left: -5%;
     top: -5%;
@@ -94,18 +94,49 @@
   }
 }
 
-.textbox {
-  align-self: center;
-  justify-self: center;
+.textBox {
+  font-size: 1.1rem;
+  &.editingFalse {
+    .editText {
+      display: none;
+    }
+  }
+  &.editingTrue {
+    .viewText {
+      display: none;
+    }
+    .editText {
+      display: grid;
+      grid-template-columns: auto 50px;
+      .inputBox {
+        border: 1px $color-sub-2 solid;
+        border-radius: 5px;
+        width: 538px;
+        padding: 5px;
+        resize: vertical;
+        overflow-y: hidden;
+      }
+    }
+  }
+
+  .saveTaskButton {
+    align-self: center;
+    justify-self: right;
+    margin: 3px;
+    width: 50px;
+    height: 30px;
+    background-color: $color-main;
+    border: 1px $color-text solid;
+    border-radius: 5px;
+  }
 }
 
 .colorChangeBox {
   display: flex;
   position: absolute;
-  // height: 15px;
   width: 70px;
   top: 0;
-  transform: translate(540px, -50%);
+  transform: translate(640px, -50%);
   .colorChangeToStandart {
     @include color-change-button($color-sub-1);
   }
@@ -118,6 +149,9 @@
   .colorChangeToGreen {
     @include color-change-button(rgb(50, 255, 50));
   }
+}
+.editBox {
+  margin-right: 5px;
 }
 
 .deleteButton {

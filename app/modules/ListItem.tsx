@@ -1,30 +1,41 @@
 import Image from "next/image"
 import styles from "./ListItem.module.scss"
-import DeleteButton from "@/public/delete-button.svg"
+import deleteButton from "@/public/delete-button.svg"
 import moveButton from "@/public/move-button.svg"
+import editButton from "@/public/edit-button.svg"
+// import Form from "next/form"
 
 interface ListItemProps {
   task: {
     text: string
     checkbox: boolean
     customColor: string
+    editing: boolean
   }
   index: number
-  compliteTask(index: number): void
+  draft: string
+  toggleTaskCompletion(index: number): void
   deleteTask(index: number): void
   moveTaksUp(index: number): void
   moveTaskDown(index: number): void
   colorChange(index: number, color: string): void
+  confirmEditTask(index: number): void
+  toggleEditingStatus(index: number): void
+  handleEditChange(event: React.ChangeEvent<HTMLTextAreaElement>): void
 }
 
 const ListItem: React.FC<ListItemProps> = ({
   task,
   index,
+  draft,
   deleteTask,
   moveTaksUp,
   moveTaskDown,
-  compliteTask,
+  toggleTaskCompletion,
   colorChange,
+  confirmEditTask,
+  toggleEditingStatus,
+  handleEditChange,
 }) => {
   return (
     <div
@@ -42,9 +53,31 @@ const ListItem: React.FC<ListItemProps> = ({
         className={`${styles.checkbox} ${
           task.checkbox ? styles.completed : styles.incompleted
         }`}
-        onClick={() => compliteTask(index)}
+        onClick={() => toggleTaskCompletion(index)}
       ></div>
-      <div className={styles.textbox}>{task.text}</div>
+      <div
+        className={`${styles.textBox} ${
+          task.editing ? styles.editingTrue : styles.editingFalse
+        }`}
+      >
+        <div className={styles.viewText}>{task.text}</div>
+        <div className={styles.editText}>
+          {/* <Form action=""> */}
+          <textarea
+            className={styles.inputBox}
+            // type="text"
+            onChange={handleEditChange}
+            value={draft}
+          />
+          {/* </Form> */}
+          <button
+            className={styles.saveTaskButton}
+            onClick={() => confirmEditTask(index)}
+          >
+            Save
+          </button>
+        </div>
+      </div>
       <div className={styles.colorChangeBox}>
         <div
           className={styles.colorChangeToStandart}
@@ -64,10 +97,19 @@ const ListItem: React.FC<ListItemProps> = ({
         ></div>
       </div>
       {/* It is possible to render each div via map, but I didn't consider it reasonable for four colors. A lot of fiddles with classNames */}
-
+      <div className={styles.editButton}>
+        <Image
+          src={editButton}
+          width={40}
+          height={40}
+          alt="Edit button"
+          onClick={() => toggleEditingStatus(index)}
+        />
+        <div></div>
+      </div>
       <div className={styles.deleteButton}>
         <Image
-          src={DeleteButton}
+          src={deleteButton}
           width={40}
           height={40}
           alt="Delete button"
@@ -77,7 +119,7 @@ const ListItem: React.FC<ListItemProps> = ({
       <div className={styles.moveButtonsBox}>
         <Image
           src={moveButton}
-          alt="move-button"
+          alt="move-up-button"
           width={25}
           height={25}
           onClick={() => moveTaksUp(index)}
@@ -85,7 +127,7 @@ const ListItem: React.FC<ListItemProps> = ({
         <Image
           className={styles.moveDownButton}
           src={moveButton}
-          alt="move-button"
+          alt="move-down-button"
           width={25}
           height={25}
           onClick={() => moveTaskDown(index)}

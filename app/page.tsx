@@ -7,19 +7,23 @@ interface Tasks {
   text: string
   checkbox: boolean
   customColor: string
+  editing: boolean
 }
 
 export default function Home() {
   const [tasks, setTasks] = useState<Tasks[]>([
-    { text: "First", checkbox: false, customColor: "none" },
-    { text: "Second", checkbox: false, customColor: "blue" },
-    { text: "Third", checkbox: false, customColor: "none" },
-    { text: "Last", checkbox: false, customColor: "green" },
+    { text: "First", checkbox: false, customColor: "none", editing: false },
+    { text: "Second", checkbox: false, customColor: "none", editing: false },
+    { text: "Third", checkbox: false, customColor: "none", editing: false },
+    { text: "Last", checkbox: false, customColor: "none", editing: false },
   ])
+
+  // Adding a new task
   const [newTask, setNewTask] = useState<Tasks>({
     text: "",
     checkbox: false,
     customColor: "none",
+    editing: false,
   })
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -27,18 +31,52 @@ export default function Home() {
       text: event.target.value,
       checkbox: false,
       customColor: "none",
+      editing: false,
     })
   }
+
   function addNewTask(): void {
     if (newTask.text.trim() !== "") {
       setTasks((t) => [...t, newTask])
-      setNewTask({ text: "", checkbox: false, customColor: "none" })
+      setNewTask({
+        text: "",
+        checkbox: false,
+        customColor: "none",
+        editing: false,
+      })
     }
   }
+
+  // Editing the task
+  const [draft, setDraft] = useState<string>("")
+
+  function handleEditChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
+    setDraft(event.target.value)
+  }
+
+  function confirmEditTask(index: number): void {
+    const temporaryTasks = [...tasks]
+    temporaryTasks[index].text = draft
+    temporaryTasks[index].editing = false
+    setTasks(temporaryTasks)
+  }
+
+  function toggleEditingStatus(index: number): void {
+    const temporaryTasks = [...tasks]
+    const noTextEditing = temporaryTasks.every((task) => task.editing === false)
+    if (noTextEditing) {
+      setDraft(temporaryTasks[index].text)
+      temporaryTasks[index].editing = true
+    } else temporaryTasks[index].editing = false
+    setTasks(temporaryTasks)
+  }
+
+  // Other
   function deleteTask(index: number): void {
     const temporaryTasks = tasks.filter((_, i) => i !== index)
     setTasks(temporaryTasks)
   }
+
   function moveTaksUp(index: number): void {
     if (index > 0) {
       const temporaryTasks = [...tasks]
@@ -49,6 +87,7 @@ export default function Home() {
       setTasks(temporaryTasks)
     }
   }
+
   function moveTaskDown(index: number): void {
     if (index + 1 < tasks.length) {
       const temporaryTasks = [...tasks]
@@ -59,7 +98,8 @@ export default function Home() {
       setTasks(temporaryTasks)
     }
   }
-  function compliteTask(index: number): void {
+
+  function toggleTaskCompletion(index: number): void {
     const temporaryTasks = [...tasks]
     if (temporaryTasks[index].checkbox == true) {
       temporaryTasks[index].checkbox = false
@@ -68,11 +108,13 @@ export default function Home() {
     }
     setTasks(temporaryTasks)
   }
+
   function colorChange(index: number, color: string): void {
     const temporaryTasks = [...tasks]
     temporaryTasks[index].customColor = color
     setTasks(temporaryTasks)
   }
+
   return (
     <div className={styles.container}>
       <EnterBox
@@ -86,11 +128,15 @@ export default function Home() {
             key={index}
             task={task}
             index={index}
-            compliteTask={compliteTask}
+            draft={draft}
+            toggleTaskCompletion={toggleTaskCompletion}
             colorChange={colorChange}
             deleteTask={deleteTask}
             moveTaksUp={moveTaksUp}
             moveTaskDown={moveTaskDown}
+            confirmEditTask={confirmEditTask}
+            handleEditChange={handleEditChange}
+            toggleEditingStatus={toggleEditingStatus}
           />
         ))}
       </div>
