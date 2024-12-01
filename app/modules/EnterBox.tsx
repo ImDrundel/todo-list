@@ -17,7 +17,7 @@ const EnterBox: React.FC<EnterBoxProps> = ({
     <Form className={styles.enterBox} action="">
       <input
         type="text"
-        placeholder="  Enter new task.."
+        placeholder="Enter new task.. Don't be shy ;)"
         onChange={handleInputChange}
         value={newTask.text}
       />

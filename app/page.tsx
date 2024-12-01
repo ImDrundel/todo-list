@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import styles from "./page.module.scss"
 import ListItem from "./modules/ListItem"
 import EnterBox from "./modules/EnterBox"
@@ -11,12 +11,45 @@ interface Tasks {
 }
 
 export default function Home() {
+  // Initial state
   const [tasks, setTasks] = useState<Tasks[]>([
-    { text: "First", checkbox: false, customColor: "none", editing: false },
-    { text: "Second", checkbox: false, customColor: "none", editing: false },
-    { text: "Third", checkbox: false, customColor: "none", editing: false },
-    { text: "Last", checkbox: false, customColor: "none", editing: false },
+    {
+      text: "Welcome to Andrew's todo list page! This is where you can add, delete and edit your to-do list",
+      checkbox: false,
+      customColor: "none",
+      editing: false,
+    },
+    {
+      text: "⬅ You can also mark tasks that have already been completed",
+      checkbox: true,
+      customColor: "none",
+      editing: false,
+    },
+    {
+      text: "Or change the color of the tasks to highlight the most important ones!↗",
+      checkbox: false,
+      customColor: "red",
+      editing: false,
+    },
+    {
+      text: "If necessary, rearrange the tasks as you wish (but do not violate the rules of physics!).",
+      checkbox: true,
+      customColor: "green",
+      editing: false,
+    },
   ])
+
+  // Interaction with localStorage
+  useEffect(() => {
+    const prevTasks = localStorage.getItem("tasks")
+    if (prevTasks) {
+      setTasks(JSON.parse(prevTasks))
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks))
+  }, [tasks])
 
   // Adding a new task
   const [newTask, setNewTask] = useState<Tasks>({
