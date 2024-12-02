@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import styles from "./page.module.scss"
 import ListItem from "./modules/ListItem"
 import EnterBox from "./modules/EnterBox"
+
 interface Tasks {
   text: string
   checkbox: boolean

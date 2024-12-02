@@ -27,6 +27,9 @@
   height: 10px;
   width: 15px;
   cursor: pointer;
+  animation-name: jump-buttons;
+  animation-iteration-count: infinite;
+  animation-duration: 5s;
 }
 .itemBox {
   margin-top: 20px;
@@ -138,19 +141,25 @@
   width: 70px;
   top: 0;
   transform: translate(640px, -50%);
+
   .colorChangeToStandart {
     @include color-change-button($color-sub-1);
+    animation-delay: 0ms;
   }
   .colorChangeToRed {
     @include color-change-button(rgb(255, 50, 50));
+    animation-delay: 200ms;
   }
   .colorChangeToBlue {
     @include color-change-button(rgb(50, 50, 255));
+    animation-delay: 400ms;
   }
   .colorChangeToGreen {
     @include color-change-button(rgb(50, 255, 50));
+    animation-delay: 600ms;
   }
 }
+
 .editButton {
   margin-right: 5px;
   cursor: pointer;
@@ -173,4 +182,11 @@
 .moveDownButton {
   margin-top: 5px;
   transform: rotate(180deg);
+}
+
+@keyframes jump-buttons {
+  0% {
+    transform: translateY(-0.5px);
+    rotate: 5deg;
+  }
 }

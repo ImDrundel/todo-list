@@ -3,7 +3,6 @@ import styles from "./ListItem.module.scss"
 import deleteButton from "@/public/delete-button.svg"
 import moveButton from "@/public/move-button.svg"
 import editButton from "@/public/edit-button.svg"
-// import Form from "next/form"
 
 interface ListItemProps {
   task: {
@@ -62,14 +61,11 @@ const ListItem: React.FC<ListItemProps> = ({
       >
         <div className={styles.viewText}>{task.text}</div>
         <div className={styles.editText}>
-          {/* <Form action=""> */}
           <textarea
             className={styles.inputBox}
-            // type="text"
             onChange={handleEditChange}
             value={draft}
           />
-          {/* </Form> */}
           <button
             className={styles.saveTaskButton}
             onClick={() => confirmEditTask(index)}
